@@ -138,19 +138,37 @@ uv run evals/run_eval.py
 
 This is a different kind of check, testing a different kind of question.
 Unit tests ask "does the code do what it's supposed to do with a given
-input?" — mocked, deterministic, instant. Evals ask "does Jev *actually
-give good answers* on real inputs?" — real API calls, real cost, and
-genuinely non-deterministic, since Jev is a probabilistic model rather than
-a lookup table.
+input?" — mocked, deterministic, instant. Evals ask "does the system
+*actually give good answers* on real inputs?" — real API calls, real cost,
+and genuinely non-deterministic, since both Jev and the LLM are
+probabilistic models, not lookup tables.
 
 [`evals/golden_tickets.jsonl`](../evals/golden_tickets.jsonl) is a small
 hand-labeled dataset — ten support messages with a human-decided "correct"
 department and urgency for each. `run_eval.py` runs the real
-`triage()` against every one of them and reports accuracy. There's no
-`assert` that fails the run: the number is a baseline you track, not a bar
-you pass. Change a question's `instructions`, tighten `criteria`, or swap
-the model, then re-run this and compare the new score to the old one —
-that's how you know whether a prompt change actually helped.
+`process_ticket()` — the *full* triage → draft → verify pipeline, not just
+triage in isolation — against every one of them, and scores accuracy from
+the triage step (department/urgency, the only part with objective ground
+truth here). It runs the draft and verify steps too, so the eval's
+cost/latency reflects what the real pipeline actually costs, even though
+reply quality isn't graded — there's no cheap, objective "correct reply"
+to check it against. There's no `assert` that fails the run: the number is
+a baseline you track, not a bar you pass. Change a question's
+`instructions`, tighten `criteria`, or swap either model, then re-run this
+and compare the new score to the old one.
+
+Notice each result line prints **two** models: `jev=jev-1.13.0
+llm=ollama_chat/gemma4:31b-cloud` (or whatever `CHAT_MODEL` you have set).
+`TriageResult.jev_model` carries the *resolved* model version the API
+actually answered with, not just the `"jev-latest"` alias every call
+requests — Jev can upgrade the model underneath that alias at any time, so
+the run summary flags it if more than one version shows up mid-run. The
+LLM side doesn't have that alias/resolved distinction — LiteLLM runs
+exactly the model string you gave it — so that one's logged straight from
+`CHAT_MODEL`. Either way, the point is the same: an eval score by itself is
+ambiguous. If accuracy drops next week, was that your prompt change, or did
+a provider quietly ship a new model version underneath you? Logging both
+models next to the score is what lets you tell those apart.
 
 **A rule of thumb for a real project:** unit tests run in CI on every
 commit, because they're free. Evals run when you touch something that

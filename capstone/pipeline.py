@@ -65,6 +65,11 @@ class TriageResult:
     is_urgent: bool
     department: str
     frustration: str
+    # The resolved model version Jev actually answered with (e.g.
+    # "jev-1.13.0"), not just the "jev-latest" alias requested — useful for
+    # evals/run_eval.py, since a Jev upgrade mid-run is exactly the kind of
+    # thing that can move accuracy without any change on our end.
+    jev_model: str
 
 
 @dataclass(frozen=True)
@@ -92,6 +97,7 @@ def triage(message: str) -> TriageResult:
         frustration=answers["frustration"]["legend"][
             str(round(answers["frustration"]["score"]))
         ],
+        jev_model=result.get("model", "unknown"),
     )
 
 

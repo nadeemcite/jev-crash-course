@@ -24,7 +24,8 @@ def main() -> None:
 
         outcome = process_ticket(message)
 
-        print(f"[Jev triage]   urgent={outcome.triage.is_urgent} "
+        print(f"[Jev triage]   model={outcome.triage.jev_model} "
+              f"urgent={outcome.triage.is_urgent} "
               f"department={outcome.triage.department} "
               f"frustration={outcome.triage.frustration}")
         print(f"[LLM draft]    {outcome.reply}")

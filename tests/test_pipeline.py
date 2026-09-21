@@ -26,9 +26,9 @@ from capstone.pipeline import (
 )
 
 
-def fake_jev_response(answers: dict) -> dict:
+def fake_jev_response(answers: dict, model: str = "jev-1.13.0") -> dict:
     """Shape a mock response the way the real Jev API returns one."""
-    return {"answers": answers, "_elapsed_ms": 12.3}
+    return {"model": model, "answers": answers, "_elapsed_ms": 12.3}
 
 
 def test_triage_parses_urgent_department_and_frustration(monkeypatch):
@@ -46,7 +46,9 @@ def test_triage_parses_urgent_department_and_frustration(monkeypatch):
 
     result = pipeline.triage("My payment failed and I need this fixed now!")
 
-    assert result == TriageResult(is_urgent=True, department="billing", frustration="angry")
+    assert result == TriageResult(
+        is_urgent=True, department="billing", frustration="angry", jev_model="jev-1.13.0"
+    )
 
 
 def test_triage_below_threshold_is_not_urgent(monkeypatch):
@@ -76,7 +78,9 @@ def test_draft_reply_includes_department_and_message(monkeypatch):
 
     monkeypatch.setattr(pipeline, "chat_complete", fake_chat_complete)
 
-    triage_result = TriageResult(is_urgent=True, department="technical", frustration="annoyed")
+    triage_result = TriageResult(
+        is_urgent=True, department="technical", frustration="annoyed", jev_model="jev-1.13.0"
+    )
     reply = pipeline.draft_reply("My API key is broken", triage_result)
 
     # draft_reply() strips whitespace from the LLM's response
