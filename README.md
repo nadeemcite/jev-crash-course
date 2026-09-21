@@ -2,6 +2,8 @@
 
 ![uv](https://img.shields.io/badge/managed%20with-uv-de5fe9)
 ![Python](https://img.shields.io/badge/python-3.12%2B-blue)
+![License: MIT](https://img.shields.io/badge/license-MIT-green)
+![Tests](https://img.shields.io/badge/tests-pytest-0a9edc)
 
 ![Hero illustration: a small fast decision spark branching inside a larger slow-thinking brain](assets/images/hero.png)
 
@@ -18,6 +20,12 @@ Everything's numbered and self-contained, so it's just as fine to do a
 level a day as it is to binge it in one sitting.
 
 ## Quick start
+
+> **Before you clone:** Jev is in **early access** as of Sept 2026, so the
+> runnable examples need a `TYPESAFE_API_KEY` you may have to
+> [request](https://typesafe.ai/). The written levels (0–10) stand on their
+> own without it, and the LLM half of Levels 6 and 10 runs on any provider
+> key — including [free ones](#bring-your-own-model-free-options).
 
 **1. Install [uv](https://docs.astral.sh/uv/)** (a fast Python package/project manager), if you don't have it:
 
@@ -171,3 +179,13 @@ structured like a real project on purpose — see
 [levels/10_capstone_project.md](levels/10_capstone_project.md) for why
 that structure (and the unit-tests-vs-evals split) matters once you're
 building something you'd actually ship.
+
+## Contributing
+
+Corrections and additions are welcome — especially if TypeSafe ships API
+changes that make something here stale, or if a provider's free tier moves.
+Open an issue or a PR.
+
+## License
+
+[MIT](LICENSE) — fork it, remix it, teach from it.
