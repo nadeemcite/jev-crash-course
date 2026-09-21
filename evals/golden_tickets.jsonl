@@ -1,0 +1,10 @@
+{"message": "Help! My payouts have been failing for 3 days and I'm losing money every hour.", "expected_department": "billing", "expected_urgent": true}
+{"message": "Hi, just wondering if you offer an annual discount on the Pro plan?", "expected_department": "sales", "expected_urgent": false}
+{"message": "This is the third time I've emailed about my broken API key and NOBODY has replied. Fix this now.", "expected_department": "technical", "expected_urgent": true}
+{"message": "Our webhook integration started throwing 500s right after your last deploy.", "expected_department": "technical", "expected_urgent": true}
+{"message": "Can I get a copy of last month's invoice for our accounting team?", "expected_department": "billing", "expected_urgent": false}
+{"message": "We're a 200-person team evaluating your product against two competitors, can we talk pricing?", "expected_department": "sales", "expected_urgent": false}
+{"message": "You charged my card twice this month, please refund the duplicate charge.", "expected_department": "billing", "expected_urgent": true}
+{"message": "Just exploring the docs before I sign up, no questions right now.", "expected_department": "sales", "expected_urgent": false}
+{"message": "The app has been down for our entire team since this morning, we can't process any orders.", "expected_department": "technical", "expected_urgent": true}
+{"message": "Do you have a student discount for the Pro plan?", "expected_department": "sales", "expected_urgent": false}

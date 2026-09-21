@@ -13,3 +13,6 @@ wheels/
 .env
 .claude/
 
+# One-off dev tooling — not part of the shipped course
+scripts/
+

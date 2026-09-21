@@ -2,7 +2,7 @@
 
 Everything below is distilled from TypeSafe's own docs plus independent
 practitioner write-ups, and matches the behavior you already exercised in
-`examples/07_tool_gate_demo.py`.
+[`examples/07_tool_gate_demo.py`](../examples/07_tool_gate_demo.py).
 
 ## 1. Speculative fan-out: ask everything at once
 
@@ -104,3 +104,16 @@ Jev answer as an unconditional safety guarantee for genuinely high-stakes
 actions. More on this in [Level 9](09_limits_hype_and_skepticism.md).
 
 Next: **[Level 9 — Limits, Hype & Skepticism](09_limits_hype_and_skepticism.md)**.
+
+<details>
+<summary>🧠 Try it yourself</summary>
+
+Take the risky-action gate from
+[`examples/07_tool_gate_demo.py`](../examples/07_tool_gate_demo.py) and rewrite
+its questions following rule #4 above: replace any abstract 1-10 scale with
+a `score` question whose `criteria` list describes concrete situations at
+each level, the way the "low / medium / high" risk example does. Run it
+against a couple of new mock commands and see if the concrete criteria
+change which bucket they land in versus your first instinct.
+
+</details>

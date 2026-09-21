@@ -1,5 +1,7 @@
 # Level 1 — What Is Jev?
 
+![Illustration: a small glowing decision point branching into several arrows inside a larger head silhouette](../assets/images/hero.png)
+
 ## The one-paragraph version
 
 **Jev** is an AI model made by a startup called **TypeSafe AI**. It came out of
@@ -32,6 +34,8 @@ decisions for less money — it means they'll make *far more* decisions than
 they do today, because suddenly it's cheap enough to ask.
 
 ## The "smart `if` statement" mental model
+
+![Illustration: a signpost fork where one road glows and one branch trails off](../assets/images/smart-if-statement.png)
 
 The most useful way to think about Jev, before any of the technical detail:
 

@@ -5,13 +5,13 @@
 Picture a typical AI agent loop — a coding assistant, a support-ticket bot,
 a browser-automation agent. It looks roughly like this:
 
-```
-loop:
-    observe current state
-    decide what to do next        <-- most steps are HERE
-    take an action (call a tool)
-    check whether the result is good enough   <-- and HERE
-    decide whether to continue, retry, or ask a human   <-- and HERE
+```mermaid
+flowchart LR
+    A[Observe current state] --> B["Decide what to do next 🡐 most steps are HERE"]
+    B --> C[Take an action / call a tool]
+    C --> D["Check whether the result is good enough 🡐 and HERE"]
+    D --> E["Continue, retry, or ask a human? 🡐 and HERE"]
+    E --> A
 ```
 
 Watch a production agent run for real, and most individual steps are not
@@ -88,3 +88,15 @@ We'll come back to whether the pitch fully holds up in
 to understand *what gap* Jev is claiming to fill.
 
 Next: **[Level 3 — System One vs. System Two](03_system_one_vs_system_two.md)**.
+
+<details>
+<summary>🧠 Try it yourself</summary>
+
+Pick a real agent, workflow, or app you've built or used recently (a coding
+assistant, a support bot, a form-processing script — anything with a
+loop). List 3 decision points inside its loop, and for each one write down:
+whether it's currently a hardcoded `if`, an LLM call, or a human — and
+whether Jev-style typed questions (`noul`/`choice`/`score`) could replace
+whichever one it currently is.
+
+</details>

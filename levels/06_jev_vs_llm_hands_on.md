@@ -5,12 +5,18 @@ the **exact same task** — "how urgent is this support message, and which
 department should handle it?" — two different ways against your own API
 keys, and compares them.
 
-## Approach A: a general-purpose LLM (`OPENAI_API_KEY`)
+## Approach A: a general-purpose LLM (`CHAT_MODEL`)
 
-Ask GPT to read the message and return JSON with the same two fields. This
-is the standard way most agents do routing/classification today: a prompt
-plus `response_format={"type": "json_object"}` plus a `json.loads()` and a
-prayer that the model followed the schema.
+Ask an LLM to read the message and return JSON with the same two fields.
+This is the standard way most agents do routing/classification today: a
+prompt asking for JSON, then a `json.loads()` and a prayer that the model
+followed the schema.
+
+The script calls whatever model you've set as `CHAT_MODEL` in `.env`
+(default `gpt-4o-mini`) via [LiteLLM](https://docs.litellm.ai/), so this
+works identically with OpenAI, Anthropic, Gemini, Groq, OpenRouter, or a
+local Ollama model — see the README's "Bring Your Own Model" section if you
+don't have a key yet.
 
 ## Approach B: Jev (`TYPESAFE_API_KEY`)
 
@@ -24,9 +30,10 @@ calibrated probabilities.
 uv run examples/06_llm_vs_jev_timing.py
 ```
 
-The script runs both approaches across a handful of test messages and
-prints a small comparison table: latency, whether the LLM's JSON parsed
-cleanly on the first try, and the answers from both sides.
+Open [`examples/06_llm_vs_jev_timing.py`](../examples/06_llm_vs_jev_timing.py)
+alongside the output — it runs both approaches across a handful of test
+messages and prints a small comparison table: latency, whether the LLM's
+JSON parsed cleanly on the first try, and the answers from both sides.
 
 ## What to actually look for in the output
 
@@ -38,14 +45,22 @@ cleanly on the first try, and the answers from both sides.
    script uses a cheap model on purpose so you can actually see both sides
    respond quickly, not to reproduce their biggest headline number.
 2. **Format reliability.** The script deliberately does *not* retry on a
-   malformed GPT JSON response — watch whether that ever happens across your
-   run. Jev's answer shape is guaranteed by construction; GPT's isn't (even
-   with `response_format` hints, it's still generating tokens that *could*
-   theoretically go wrong, just less often than free-form prompting).
+   malformed LLM JSON response — watch whether that ever happens across your
+   run. Jev's answer shape is guaranteed by construction; an LLM's isn't
+   (even with a "return only JSON" instruction, it's still generating tokens
+   that *could* theoretically go wrong, just less often than free-form
+   prompting — and reliability varies noticeably by provider and model).
 3. **What you *don't* get from Jev.** Notice Jev never explains itself in
    prose — no "I think this is billing because...". If you need a
    human-readable rationale attached to a decision, that's a job for the LLM
    side, not Jev. This is the tradeoff, not a bug.
+
+Try swapping `CHAT_MODEL` to a different provider (e.g.
+`gemini/gemini-2.5-flash`, local `ollama_chat/llama3.2`, or free hosted
+`ollama_chat/gemma4:31b-cloud`) and re-running — the
+latency gap and JSON reliability both shift depending on which model you
+pick, which is itself part of the point: Jev's behavior here is constant
+regardless of provider; a general LLM's isn't.
 
 ## The honest conclusion
 

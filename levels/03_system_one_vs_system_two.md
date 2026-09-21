@@ -1,5 +1,7 @@
 # Level 3 — System One vs. System Two
 
+![Illustration: a fast spark shooting past a slow, deliberately turning gear-spiral](../assets/images/system-one-two.png)
+
 ## Kahneman's framing, borrowed for AI
 
 Psychologist Daniel Kahneman's *Thinking, Fast and Slow* describes two modes

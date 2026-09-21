@@ -1,5 +1,7 @@
 # Level 7 — Agent Loop Patterns
 
+![Illustration: a loop of nodes with one node styled as a gate checkpoint](../assets/images/agent-loop-gating.png)
+
 Now that you've seen a raw call and a head-to-head comparison, here are the
 three patterns that keep showing up wherever people plug Jev into an actual
 agent loop.
@@ -10,15 +12,12 @@ Before letting an agent execute a risky action (run a shell command, send an
 email, move money), ask Jev to classify the *risk* of that specific action
 given the current context, and gate execution on the answer.
 
-```
-agent proposes: run_shell("rm -rf build/")
-        │
-        ▼
-   Jev: is this action reversible? is it destructive? risk score?
-        │
-        ├─ low risk / high confidence  → execute automatically
-        ├─ medium risk / low confidence → ask the user to confirm
-        └─ high risk                    → block and explain why
+```mermaid
+flowchart TD
+    A["Agent proposes: run_shell('rm -rf build/')"] --> B["Jev: is this reversible? destructive? risk score?"]
+    B -->|low risk / high confidence| C[Execute automatically]
+    B -->|medium risk / low confidence| D[Ask the user to confirm]
+    B -->|high risk| E[Block and explain why]
 ```
 
 LangChain's own middleware ecosystem has a concrete version of this:
@@ -28,8 +27,8 @@ decide whether a proposed tool call should be allowed to run automatically
 Code, Codex, and Cursor, just implemented with a purpose-built decision
 model instead of hand-written regexes.
 
-**Try it:** `uv run examples/07_tool_gate_demo.py` — a tiny mock "shell tool"
-gated by a live Jev call.
+**Try it:** `uv run` [`examples/07_tool_gate_demo.py`](../examples/07_tool_gate_demo.py)
+— a tiny mock "shell tool" gated by a live Jev call.
 
 ## Pattern 2 — Model routing
 
@@ -37,14 +36,11 @@ Not every step of an agent's job needs a frontier model. `ModelRouterMiddleware`
 patterns use Jev as the very first step: classify how hard the incoming
 request actually is, then route accordingly.
 
-```
-user request
-     │
-     ▼
-Jev: "how complex is this request?" (score: trivial ... very complex)
-     │
-     ├─ trivial/simple   → cheap, fast model (or a canned response)
-     └─ complex          → frontier reasoning model
+```mermaid
+flowchart TD
+    A[User request] --> B["Jev: how complex is this request? (score: trivial ... very complex)"]
+    B -->|trivial / simple| C[Cheap, fast model — or a canned response]
+    B -->|complex| D[Frontier reasoning model]
 ```
 
 This turns "always call the expensive model, just in case" into "call the
@@ -57,16 +53,13 @@ Instead of trusting an LLM's output blindly, or paying for a second LLM call
 to "check the first one's work" (slow and expensive), use Jev as a fast
 verification layer:
 
-```
-User → LLM generates a response
-             │
-             ▼
-        Jev checks it: does this response answer the question?
-        does it contain anything policy-violating? is it complete?
-             │
-             ├─ accept  → send to user
-             ├─ reject  → regenerate
-             └─ unsure  → route to human review
+```mermaid
+flowchart TD
+    A[User] --> B[LLM generates a response]
+    B --> C["Jev checks it: does it answer the question? policy-violating? complete?"]
+    C -->|accept| D[Send to user]
+    C -->|reject| E[Regenerate]
+    C -->|unsure| F[Route to human review]
 ```
 
 This is the same shape as Pattern 1, just applied to *generated text*

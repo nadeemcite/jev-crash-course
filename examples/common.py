@@ -1,9 +1,14 @@
 """Shared helpers for the Jev crash course examples.
 
-Loads .env once and exposes a tiny `call_jev()` wrapper around the real
-TypeSafe System One API, plus a couple of small utilities used by several
-level scripts. Nothing here is Jev's own SDK — it's a deliberately thin
-wrapper so you can see exactly what's going over the wire.
+Loads .env once and exposes:
+- `call_jev()`      — a thin wrapper around the real TypeSafe System One API
+- `chat_complete()` — a model-agnostic "write" helper via LiteLLM, so the
+                       course works with OpenAI, Anthropic, Gemini, Groq,
+                       OpenRouter, local Ollama, or anything else LiteLLM
+                       supports, just by changing CHAT_MODEL in .env.
+
+Nothing here is Jev's own SDK — call_jev is a deliberately thin wrapper so
+you can see exactly what's going over the wire.
 """
 
 from __future__ import annotations
@@ -13,10 +18,15 @@ import time
 
 import requests
 from dotenv import load_dotenv
+from litellm import completion
 
 load_dotenv()
 
 JEV_ENDPOINT = "https://api.typesafe.ai/v1/systemone"
+
+# Any LiteLLM-style model string: "gpt-4o-mini", "gemini/gemini-2.5-flash",
+# "groq/<model>", "ollama_chat/llama3.2", etc. See README "Bring Your Own Model".
+DEFAULT_CHAT_MODEL = os.getenv("CHAT_MODEL", "gpt-4o-mini")
 
 
 def require_key(name: str) -> str:
@@ -60,8 +70,20 @@ def call_jev(state: str, questions: dict, model: str = "jev-latest") -> dict:
     return data
 
 
-def openai_client():
-    """Return an OpenAI client, failing clearly if the key is missing."""
-    from openai import OpenAI
+def chat_complete(prompt: str, model: str | None = None, **kwargs) -> str:
+    """Ask any LLM to write something, via LiteLLM.
 
-    return OpenAI(api_key=require_key("OPENAI_API_KEY"))
+    `model` accepts any LiteLLM model string — "gpt-4o-mini" (default),
+    "claude-haiku-4-5-20251001", "gemini/gemini-2.5-flash", "groq/<model>",
+    "ollama_chat/llama3.2" (local), "ollama_chat/gemma4:31b-cloud" (free,
+    hosted — no local hardware needed), etc. If omitted, uses CHAT_MODEL
+    from .env (or "gpt-4o-mini" if that's not set either). LiteLLM reads
+    the matching provider API key from the environment automatically —
+    see README "Bring Your Own Model" for where to get one for free.
+    """
+    resp = completion(
+        model=model or DEFAULT_CHAT_MODEL,
+        messages=[{"role": "user", "content": prompt}],
+        **kwargs,
+    )
+    return resp.choices[0].message.content

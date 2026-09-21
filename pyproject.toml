@@ -5,7 +5,19 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "litellm>=1.83.0",
     "openai>=3.16.2",
     "python-dotenv>=1.2.3",
     "requests>=2.34.2",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+# Lets `tests/` import the `capstone` package from the repo root without
+# installing this project or hacking sys.path inside the tests themselves.
+pythonpath = ["."]
+testpaths = ["tests"]

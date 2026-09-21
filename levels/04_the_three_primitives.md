@@ -110,3 +110,14 @@ need up front, since it's nearly free.
 
 Next: **[Level 5 — The Real API](05_the_real_api.md)**, where we make an
 actual call using the `TYPESAFE_API_KEY` already sitting in your `.env`.
+
+<details>
+<summary>🧠 Try it yourself</summary>
+
+Design a `choice` question with a built-in **escape hatch**: given a
+customer message, the categories are `billing`, `technical`, `sales` — but
+sometimes none of those fit. Add a fourth option (e.g. `unclear`) to the
+`criteria` dict so the model has somewhere honest to land instead of being
+forced into the closest wrong bucket. Write out the full request JSON.
+
+</details>

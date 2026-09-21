@@ -80,3 +80,16 @@ that are useful context:
 
 Next: **[Level 10 — Capstone Project](10_capstone_project.md)**, where you
 put an LLM and Jev to work together, end to end.
+
+<details>
+<summary>🧠 Try it yourself</summary>
+
+Pick one claim from TypeSafe's marketing (e.g. "under 500ms," "adding
+questions is nearly free") and design a small experiment using
+[`examples/common.py`](../examples/common.py)'s `call_jev()` to test it
+against your own network and workload — vary the number of questions, the
+length of `state`, or run it 50 times and look at the distribution of
+`_elapsed_ms` instead of a single sample. Does the claim hold up for you
+specifically?
+
+</details>
