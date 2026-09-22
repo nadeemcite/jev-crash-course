@@ -16,3 +16,6 @@ wheels/
 # One-off dev tooling — not part of the shipped course
 scripts/
 
+# Local working notes, drafts, throwaway artefacts
+scratchpad/
+
