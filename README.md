@@ -5,7 +5,14 @@
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 ![Tests](https://img.shields.io/badge/tests-pytest-0a9edc)
 
-![Hero illustration: a small fast decision spark branching inside a larger slow-thinking brain](assets/images/hero.png)
+![Three panels compared: Traditional Software as a rigid flowchart that has no branch for the unexpected case; Agentic Systems as long LLM chains with an overwhelmed brain juggling everything; Smart Software as a tidy flowchart with a small decision model at each branch point](assets/images/hero.png)
+
+**Traditional software** can only handle the branches you hardcoded.
+**Agentic systems** hand every step to an LLM — flexible, but slow,
+expensive, and hard to predict. **Smart software** is the middle path: a
+fast, cheap decision model at each branch point, with the LLM reserved for
+the one step that actually needs to write something. That third column is
+what Jev is for.
 
 An 11-level crash course (0-10) to understand **Jev** — the "System One"
 decision model from TypeSafe AI that's been generating buzz since its

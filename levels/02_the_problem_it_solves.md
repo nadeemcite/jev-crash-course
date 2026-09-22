@@ -1,5 +1,14 @@
 # Level 2 — The Problem It Solves
 
+![Three panels compared: Traditional Software as a rigid flowchart with no branch for the unexpected case; Agentic Systems as long LLM chains with an overwhelmed brain juggling everything; Smart Software as a tidy flowchart with a small decision model at each branch point](../assets/images/hero.png)
+
+Three ways to build software that has to make decisions. Traditional
+software only handles the branches someone hardcoded — the case nobody
+anticipated falls through. Agentic systems route everything through an
+LLM, which handles anything but is slow, costly, and hard to predict.
+Smart software puts a fast, cheap decision model at each branch point and
+saves the LLM for the one step that genuinely needs to generate something.
+
 ## What an "AI agent" actually spends its time doing
 
 Picture a typical AI agent loop — a coding assistant, a support-ticket bot,

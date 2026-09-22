@@ -1,6 +1,6 @@
 # Level 3 — System One vs. System Two
 
-![Illustration: a fast spark shooting past a slow, deliberately turning gear-spiral](../assets/images/system-one-two.png)
+![Illustration: on the left a small lightning spark travelling a short straight arrow through open space; on the right a large assembly of interlocking gears feeding a long winding coil](../assets/images/system-one-two.png)
 
 ## Kahneman's framing, borrowed for AI
 

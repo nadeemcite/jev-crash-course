@@ -1,6 +1,6 @@
 # Level 7 — Agent Loop Patterns
 
-![Illustration: a loop of nodes with one node styled as a gate checkpoint](../assets/images/agent-loop-gating.png)
+![Illustration: a chain of steps flowing left to right, interrupted partway by a brain character acting as a turnstile gate — one arrow continues forward to a green box, another is diverted down to an amber hold-for-review box](../assets/images/agent-loop-gating.png)
 
 Now that you've seen a raw call and a head-to-head comparison, here are the
 three patterns that keep showing up wherever people plug Jev into an actual

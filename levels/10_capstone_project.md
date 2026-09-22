@@ -1,6 +1,6 @@
 # Level 10 — Capstone: A Support-Ticket Triage Project
 
-![Illustration: an inbox tray flowing through a gate checkpoint, a pencil drafting, into an outbox tray](../assets/images/capstone-pipeline.png)
+![Illustration: a four-stage pipeline — an incoming envelope, a brain character sorting it into labelled bins, a pencil drafting a reply, then the brain again as a final checkpoint splitting into a green tick and an amber pause](../assets/images/capstone-pipeline.png)
 
 Everything from Levels 1–9, combined into one small pipeline — but this
 level isn't just a script to read. It's structured like a real AI project,
